@@ -1,3 +1,4 @@
+// 0. Building a Dynamic Content Generator with Advanced DOM Manipulation
 const submitBtn = document.getElementById("newQuote");
 const quoteDisplay = document.getElementById("quoteDisplay");
 const quoteElement = document.createElement("p");
@@ -34,6 +35,9 @@ function createAddQuoteForm() {
       text: newQuoteText.value.trim(),
     };
     quotes.push(newQuote);
+    let quotesString = JSON.stringify(quotes);
+    localStorage.setItem("quotes", quotesString);
+
     newQuoteCategory.value = "";
     newQuoteText.value = "";
     newQuoteText.focus();
