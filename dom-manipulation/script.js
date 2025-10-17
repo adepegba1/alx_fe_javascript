@@ -2,6 +2,7 @@
 const submitBtn = document.getElementById("newQuote");
 const quoteDisplay = document.getElementById("quoteDisplay");
 const quoteElement = document.createElement("p");
+const exportBtn = document.getElementById("export");
 
 let quotes = JSON.parse(localStorage.getItem("quotes")) ||
   JSON.parse(sessionStorage.getItem("quotes")) || [
@@ -75,3 +76,14 @@ function importFromJsonFile(event) {
   };
   fileReader.readAsText(event.target.files[0]);
 }
+function exportToJsonFile() {
+  const json = JSON.stringify(quotes, null, 2);
+  const blob = new Blob([json], { type: "application/json" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "quotes.json";
+  link.click();
+}
+exportBtn.addEventListener("click", () => {
+  exportToJsonFile();
+});
