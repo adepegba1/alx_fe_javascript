@@ -1,5 +1,6 @@
 const submitBtn = document.getElementById("newQuote");
 const quoteDisplay = document.getElementById("quoteDisplay");
+const quoteElement = document.createElement("p");
 
 let quotes = [
   {
@@ -36,21 +37,23 @@ function createAddQuoteForm() {
     newQuoteCategory.value = "";
     newQuoteText.value = "";
     newQuoteText.focus();
-    quoteDisplay.innerHTML = showRandomQuote();
+    quoteElement.innerHTML = showRandomQuote();
   }
 }
 
 function showRandomQuote() {
   if (quotes.length > 0) {
     const rand = Math.floor(Math.random() * quotes.length);
-    return `${quotes[rand].category}: "${quotes[rand].quote}"`;
+    return `${quotes[rand].category}: "${quotes[rand].text}"`;
   } else {
     return "No quotes available";
   }
 }
 submitBtn.addEventListener("click", (event) => {
   event.preventDefault();
-  quoteDisplay.innerHTML = showRandomQuote();
+  quoteDisplay.innerHTML = "";
+  quoteElement.textContent = showRandomQuote();
+  quoteDisplay.appendChild(quoteElement);
 });
 
 function addQuote() {
