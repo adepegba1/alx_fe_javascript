@@ -89,3 +89,20 @@ function exportToJsonFile() {
 exportBtn.addEventListener("click", () => {
   exportToJsonFile();
 });
+
+// 2. Creating a Dynamic Content Filtering System Using Web Storage and JSON
+const selection = document.getElementById("categoryFilter");
+function populateCategories() {
+  const uniqueCategories = [...new Set(quotes.map((quote) => quote.category))];
+  uniqueCategories.forEach((element) => {
+    const options = document.createElement("option");
+    options.value = element;
+    options.textContent = element;
+    selection.appendChild(options);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  createAddQuoteForm();
+  populateCategories();
+});
