@@ -38,7 +38,7 @@ function createAddQuoteForm() {
     newQuoteCategory.value = "";
     newQuoteText.value = "";
     newQuoteText.focus();
-    quoteDisplay.textContent = showRandomQuote();
+    quoteDisplay.innerHTML = showRandomQuote();
   }
 }
 
@@ -52,7 +52,7 @@ function showRandomQuote() {
 }
 submitBtn.addEventListener("click", (event) => {
   event.preventDefault();
-  quoteDisplay.textContent = showRandomQuote();
+  quoteDisplay.innerHTML = showRandomQuote();
 });
 
 function addQuote() {
