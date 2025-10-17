@@ -40,19 +40,17 @@ function createAddQuoteForm() {
     let quotesString = JSON.stringify(quotes);
     localStorage.setItem("quotes", quotesString);
     sessionStorage.setItem("quotes", quotesString);
-
     newQuoteCategory.value = "";
     newQuoteText.value = "";
     newQuoteText.focus();
-    quoteElement.innerHTML = showRandomQuote();
+    // quoteElement.innerHTML = showRandomQuote(filterQuotes());
   }
 }
 
-function showRandomQuote() {
-  //   filterQuotes();
-  if (quotes.length > 0) {
-    const rand = Math.floor(Math.random() * quotes.length);
-    return `${quotes[rand].category}: "${quotes[rand].text}"`;
+function showRandomQuote(quotesToShow = quotes) {
+  if (quotesToShow.length > 0) {
+    const rand = Math.floor(Math.random() * quotesToShow.length);
+    return `${quotesToShow[rand].category}: "${quotesToShow[rand].text}"`;
   } else {
     return "No quotes available";
   }
@@ -62,6 +60,7 @@ submitBtn.addEventListener("click", (event) => {
   quoteDisplay.innerHTML = "";
   quoteElement.textContent = showRandomQuote();
   quoteDisplay.appendChild(quoteElement);
+  filterQuotes();
 });
 
 function addQuote() {
@@ -101,13 +100,23 @@ function populateCategories() {
     options.textContent = element;
     selection.appendChild(options);
   });
+  const lastSelectedCategory = localStorage.getItem("lastSelectedCategory");
+  if (lastSelectedCategory) {
+    selection.value = lastSelectedCategory;
+    filterQuotes();
+  } else {
+    selection.value = "all";
+    filterQuotes();
+  }
 }
 function filterQuotes() {
   const selectedCategory = selection.value;
+  localStorage.setItem("lastSelectedCategory", selectedCategory);
   const filteredQuotes = quotes.filter((quote) => {
     return selectedCategory === "all" || quote.category === selectedCategory;
   });
-  // Update the displayed quotes with filteredQuotes
-  showRandomQuote(filteredQuotes);
+  quoteDisplay.innerHTML = "";
+  quoteElement.textContent = showRandomQuote(filteredQuotes);
+  quoteDisplay.appendChild(quoteElement);
 }
 document.addEventListener("DOMContentLoaded", populateCategories);
