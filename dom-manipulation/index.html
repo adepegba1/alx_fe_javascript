@@ -9,6 +9,13 @@
 
 <body>
     <h1>Dynamic Quote Generator</h1>
+    <!-- 2. Creating a Dynamic Content Filtering System Using Web Storage and JSON -->
+    <div>
+        <select id="categoryFilter" onchange="filterQuotes()">
+            <option value="all">All Categories</option>
+            <!-- Dynamically populated categories -->
+        </select>
+    </div>
     <div id="quoteDisplay"></div>
     <button id="newQuote">Show New Quote</button>
 
@@ -25,13 +32,7 @@
     <div>
         <button id="export">Export Quotes</button>
     </div>
-    <!-- 2. Creating a Dynamic Content Filtering System Using Web Storage and JSON -->
-    <div>
-        <select id="categoryFilter" onchange="filterQuotes()">
-            <option value="all">All Categories</option>
-            <!-- Dynamically populated categories -->
-        </select>
-    </div>
+
 
     <script src="script.js"></script>
 </body>

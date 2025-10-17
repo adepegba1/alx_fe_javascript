@@ -49,6 +49,7 @@ function createAddQuoteForm() {
 }
 
 function showRandomQuote() {
+  //   filterQuotes();
   if (quotes.length > 0) {
     const rand = Math.floor(Math.random() * quotes.length);
     return `${quotes[rand].category}: "${quotes[rand].text}"`;
@@ -101,8 +102,12 @@ function populateCategories() {
     selection.appendChild(options);
   });
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  createAddQuoteForm();
-  populateCategories();
-});
+function filterQuotes() {
+  const selectedCategory = selection.value;
+  const filteredQuotes = quotes.filter((quote) => {
+    return selectedCategory === "all" || quote.category === selectedCategory;
+  });
+  // Update the displayed quotes with filteredQuotes
+  showRandomQuote(filteredQuotes);
+}
+document.addEventListener("DOMContentLoaded", populateCategories);
