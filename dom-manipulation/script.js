@@ -66,6 +66,8 @@ submitBtn.addEventListener("click", (event) => {
 function addQuote() {
   createAddQuoteForm();
 }
+
+// 1. Implementing Web Storage and JSON Handling
 function importFromJsonFile(event) {
   const fileReader = new FileReader();
   fileReader.onload = function (event) {
