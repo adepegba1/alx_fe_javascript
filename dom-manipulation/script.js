@@ -3,28 +3,29 @@ const submitBtn = document.getElementById("newQuote");
 const quoteDisplay = document.getElementById("quoteDisplay");
 const quoteElement = document.createElement("p");
 
-let quotes = [
-  {
-    category: "Motivation",
-    text: "Believe you can and you're halfway there.",
-  },
-  {
-    category: "Success",
-    text: "It does not matter how slowly you go as long as you do not stop.",
-  },
-  {
-    category: "Happiness",
-    text: "Happiness is not something ready made. It comes from your own actions.",
-  },
-  {
-    category: "Inspiration",
-    text: "You don't have to be great to start, but you have to start to be great.",
-  },
-  {
-    category: "Resilience",
-    text: "Life is 10% what happens to you and 90% how you react to it.",
-  },
-];
+let quotes = JSON.parse(localStorage.getItem("quotes")) ||
+  JSON.parse(sessionStorage.getItem("quotes")) || [
+    {
+      category: "Motivation",
+      text: "Believe you can and you're halfway there.",
+    },
+    {
+      category: "Success",
+      text: "It does not matter how slowly you go as long as you do not stop.",
+    },
+    {
+      category: "Happiness",
+      text: "Happiness is not something ready made. It comes from your own actions.",
+    },
+    {
+      category: "Inspiration",
+      text: "You don't have to be great to start, but you have to start to be great.",
+    },
+    {
+      category: "Resilience",
+      text: "Life is 10% what happens to you and 90% how you react to it.",
+    },
+  ];
 
 function createAddQuoteForm() {
   const newQuoteText = document.getElementById("newQuoteText");
@@ -37,6 +38,7 @@ function createAddQuoteForm() {
     quotes.push(newQuote);
     let quotesString = JSON.stringify(quotes);
     localStorage.setItem("quotes", quotesString);
+    sessionStorage.setItem("quotes", quotesString);
 
     newQuoteCategory.value = "";
     newQuoteText.value = "";
@@ -62,4 +64,14 @@ submitBtn.addEventListener("click", (event) => {
 
 function addQuote() {
   createAddQuoteForm();
+}
+function importFromJsonFile(event) {
+  const fileReader = new FileReader();
+  fileReader.onload = function (event) {
+    const importedQuotes = JSON.parse(event.target.result);
+    quotes.push(...importedQuotes);
+    saveQuotes();
+    alert("Quotes imported successfully!");
+  };
+  fileReader.readAsText(event.target.files[0]);
 }
