@@ -122,10 +122,15 @@ function filterQuotes() {
 document.addEventListener("DOMContentLoaded", populateCategories);
 
 // 3. Syncing Data with Server and Implementing Conflict Resolution
-function fetchQuotesFromServer() {
-  return fetch("https://example.com/quotes").then((response) =>
-    response.json()
-  );
+
+async function fetchQuotesFromServer() {
+  try {
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching quotes:", error);
+  }
 }
 
 function syncQuotes() {
