@@ -133,6 +133,25 @@ async function fetchQuotesFromServer() {
   }
 }
 
+async function postQuoteToServer(quote) {
+  try {
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(quote),
+    });
+    if (!response.ok) {
+      throw new Error("Failed to post quote");
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error posting quote:", error);
+  }
+}
+
 function syncQuotes() {
   fetchQuotesFromServer().then((serverQuotes) => {
     const localQuotes = getLocalQuotes();
