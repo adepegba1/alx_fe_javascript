@@ -178,6 +178,7 @@ function mergeQuotes(localQuotes, serverQuotes) {
 
 function saveLocalQuotes(quotes) {
   localStorage.setItem("quotes", JSON.stringify(quotes));
+  console.log("Quotes synced with server!");
 }
 
 setInterval(syncQuotes, 6000);
