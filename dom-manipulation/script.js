@@ -120,3 +120,38 @@ function filterQuotes() {
   quoteDisplay.appendChild(quoteElement);
 }
 document.addEventListener("DOMContentLoaded", populateCategories);
+
+// 3. Syncing Data with Server and Implementing Conflict Resolution
+function fetchQuotesFromServer() {
+  return fetch("https://example.com/quotes").then((response) =>
+    response.json()
+  );
+}
+
+function syncQuotes() {
+  fetchQuotesFromServer().then((serverQuotes) => {
+    const localQuotes = getLocalQuotes();
+    const updatedQuotes = mergeQuotes(localQuotes, serverQuotes);
+    saveLocalQuotes(updatedQuotes);
+  });
+}
+
+function getLocalQuotes() {
+  const data = localStorage.getItem("quotes");
+  return data ? JSON.parse(data) : [];
+}
+
+function mergeQuotes(localQuotes, serverQuotes) {
+  const localQuotesMap = {};
+  localQuotes.foreach((quote) => {
+    localQuotesMap[quote.category] = quote;
+  });
+  serverQuotes.forEach((serverQuote) => {
+    localQuotesMap[serverQuote.category] = serverQuote;
+  });
+  return Object.values(localQuotesMap);
+}
+
+function saveLocalQuotes(quotes) {
+  localStorage.setItem("quotes", JSON.stringify(quotes));
+}
